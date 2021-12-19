@@ -1,3 +1,4 @@
+// const { default: generateEmptyCoverage } = require('@jest/reporters/build/generateEmptyCoverage');
 const fs = require('fs');
 const inquirer = require('inquirer');
 
@@ -6,11 +7,13 @@ const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 let managerHTML = "";
+let engineerHTML = "";
+let internHTML = "";
 console.log("Please built your team!")
 
 
 const managerInfo = () => {
-  return  inquirer.prompt([
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'managerName',
@@ -47,7 +50,7 @@ const managerInfo = () => {
                 <li class="list-group-item">Office Number:${managerOffice}</li>
             </ul>
             </div>`
-            addMember();
+        addMember();
     })
 }
 managerInfo();
@@ -59,6 +62,17 @@ const addMember = () => {
         message: 'Which type of member would you like to add?',
         choices: ['Engineer', 'Intern', 'I dont want to add any more team members'],
 
+    }).then(({ memberType }) => {
+        switch (memberType) {
+            case 'Engineer':
+                engineerInfo();
+                break;
+            case 'Intern':
+                internInfo();
+                break;
+            default:
+                createHTML()
+        }
     })
 }
 
@@ -86,7 +100,23 @@ const engineerInfo = () => {
             message: "What is the engineer's Github username? "
         },
 
-    ])
+    ]).then(({ engineerName, engineerId, engineerEmail, engineerOffice }) => {
+        let newEngineer = new Enginneer(engineerName, engineerId, engineerEmail, engineerOffice);
+        managerHTML = `
+        <div class="card col-6 col-md-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">${engineerName}</h5>
+            <p class="card-text">ICON ENGINEER</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID:${engineerId}</li>
+            <li class="list-group-item">Email:<a href="mailto:${engineerEmail}">${engineerEmail}</a></li>
+            <li class="list-group-item">Github:<a href="https://github.com/${engineerGithub}">${engineerGithub}</a></li>
+        </ul>
+        </div>`
+        addMember();
+
+    })
 };
 
 const internInfo = () => {
@@ -113,7 +143,23 @@ const internInfo = () => {
             message: "What is the intern's school name? "
         },
 
-    ])
+    ]).then(({ internName, internId, internEmail, internOffice }) => {
+        let newIntern = new Intern(internName, internId, internEmail, internOffice);
+        managerHTML = `
+        <div class="card col-6 col-md-4" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${internName}</h5>
+                <p class="card-text">ICON INTERN</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID:${internId}</li>
+                <li class="list-group-item">Email:<a href="mailto:${internEmail}">${internEmail}</a></li>
+                <li class="list-group-item">School:${internSchool}</li>
+            </ul>
+        </div>`
+        addMember();
+
+    })
 };
 
 // managerInfo()
@@ -154,3 +200,37 @@ const internInfo = () => {
 
 
 
+function createHTML() {
+
+    var opening = `
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/assets/style.css"/>
+    <title>My Team</title>
+</head>
+
+<body>
+    <header>My Team</header>
+    <section class="row">
+    `
+    var closing = `
+
+
+    </section>
+</body>
+
+</html>
+    `
+    var content = opening + managerHTML + engineerHTML + internHTML + closing
+    fs.writeFileSync("./dist/index.html", content, function (err) {
+        if (errr) throw err;
+    })
+    console.log("Team HTML file generated in ./dist/index.html")
+}

@@ -1,14 +1,16 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-const Employee = require('./lib/Employee.js');
+
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
+let managerHTML = "";
+console.log("Please built your team!")
 
-inquirer.prompt("Please built your team!")
+
 const managerInfo = () => {
-    return inquirer.prompt([
+  return  inquirer.prompt([
         {
             type: 'input',
             name: 'managerName',
@@ -29,20 +31,36 @@ const managerInfo = () => {
             type: 'input',
             name: 'managerOffice',
             message: "What is the team manager's office number? "
-        },
+        }
 
-    ])
+    ]).then(({ managerName, managerId, managerEmail, managerOffice }) => {
+        let newManager = new Manager(managerName, managerId, managerEmail, managerOffice);
+        managerHTML = `
+            <div class="card col-6 col-md-4" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${managerName}</h5>
+                <p class="card-text">ICON MANAGER</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID:${managerId}</li>
+                <li class="list-group-item">Email:<a href="mailto:${managerEmail}">${managerEmail}</a></li>
+                <li class="list-group-item">Office Number:${managerOffice}</li>
+            </ul>
+            </div>`
+            addMember();
+    })
 }
+managerInfo();
 
 const addMember = () => {
-    return inquirer.prompt({
+    inquirer.prompt({
         type: 'checkbox',
         name: 'memberType',
         message: 'Which type of member would you like to add?',
-        choices: ['Engineer','Intern','I dont want to add any more team members'],
-        
+        choices: ['Engineer', 'Intern', 'I dont want to add any more team members'],
+
     })
-} 
+}
 
 const engineerInfo = () => {
     return inquirer.prompt([
@@ -98,33 +116,36 @@ const internInfo = () => {
     ])
 };
 
-managerInfo()
-.then(addMember)
+// managerInfo()
+//     .then(addMember)
 
-.then(managerData => { generateManager(managerData);
-    fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-        if (err) throw err;
+//     .then(managerData => {
+//         generateManager(managerData);
+//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
+//             if (err) throw err;
 
-        console.log('Manager is added')
-    })
+//             console.log('Manager is added')
+//         })
 
-})
-.then(engineerData => { generateEngineer(engineerData);
-    fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-        if (err) throw err;
+//     })
+//     .then(engineerData => {
+//         generateEngineer(engineerData);
+//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
+//             if (err) throw err;
 
-        console.log('Engineer is added')
-    })
+//             console.log('Engineer is added')
+//         })
 
-})
-.then(internData => { generateIntern(internData);
-    fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-        if (err) throw err;
+//     })
+//     .then(internData => {
+//         generateIntern(internData);
+//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
+//             if (err) throw err;
 
-        console.log('Intern is added')
-    })
+//             console.log('Intern is added')
+//         })
 
-})
+//     })
 
 
 

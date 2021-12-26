@@ -31,7 +31,7 @@
  
 
 ### Screenshot
-  ![Screenshot]()
+  ![Screenshot](https://github.com/ncp9988/team-PROFILE-generator/blob/main/Screen%20Shot%202021-12-26%20at%204.08.04%20PM.png)
   
 ### Video
   [Video](https://watch.screencastify.com/v/aeOcI16bFzhLk6yCjwoV)

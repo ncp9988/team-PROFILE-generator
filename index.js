@@ -38,7 +38,7 @@ const managerInfo = () => {
 
     ]).then(({ managerName, managerId, managerEmail, managerOffice }) => {
         let newManager = new Manager(managerName, managerId, managerEmail, managerOffice);
-        managerHTML = `
+        managerHTML += `
             <div class="card col-6 col-md-4" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">${managerName}</h5>
@@ -57,12 +57,13 @@ managerInfo();
 
 const addMember = () => {
     inquirer.prompt({
-        type: 'checkbox',
+        type: 'list',
         name: 'memberType',
         message: 'Which type of member would you like to add?',
         choices: ['Engineer', 'Intern', 'I dont want to add any more team members'],
 
     }).then(({ memberType }) => {
+        console.log(memberType)
         switch (memberType) {
             case 'Engineer':
                 engineerInfo();
@@ -100,9 +101,9 @@ const engineerInfo = () => {
             message: "What is the engineer's Github username? "
         },
 
-    ]).then(({ engineerName, engineerId, engineerEmail, engineerOffice }) => {
-        let newEngineer = new Enginneer(engineerName, engineerId, engineerEmail, engineerOffice);
-        managerHTML = `
+    ]).then(({ engineerName, engineerId, engineerEmail, engineerGithub }) => {
+        let newEngineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
+        engineerHTML += `
         <div class="card col-6 col-md-4" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">${engineerName}</h5>
@@ -143,9 +144,9 @@ const internInfo = () => {
             message: "What is the intern's school name? "
         },
 
-    ]).then(({ internName, internId, internEmail, internOffice }) => {
-        let newIntern = new Intern(internName, internId, internEmail, internOffice);
-        managerHTML = `
+    ]).then(({ internName, internId, internEmail, internSchool }) => {
+        let newIntern = new Intern(internName, internId, internEmail, internSchool);
+        internHTML += `
         <div class="card col-6 col-md-4" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">${internName}</h5>
@@ -192,12 +193,6 @@ const internInfo = () => {
 //         })
 
 //     })
-
-
-
-
-
-
 
 
 function createHTML() {

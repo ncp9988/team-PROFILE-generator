@@ -39,15 +39,17 @@ const managerInfo = () => {
     ]).then(({ managerName, managerId, managerEmail, managerOffice }) => {
         let newManager = new Manager(managerName, managerId, managerEmail, managerOffice);
         managerHTML += `
-            <div class="card col-6 col-md-4" style="width: 18rem;">
-            <div class="card-body">
+            <div class="card col-6 col-md-4 " style="width: 18rem;">
+            <div class="card-body bg-primary text-light">
                 <h5 class="card-title">${managerName}</h5>
-                <p class="card-text">ICON MANAGER</p>
+                
+
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID:${managerId}</li>
                 <li class="list-group-item">Email:<a href="mailto:${managerEmail}">${managerEmail}</a></li>
-                <li class="list-group-item">Office Number:${managerOffice}</li>
+                <li class="list-group-item">Office Number: ${managerOffice}</li>
+
             </ul>
             </div>`
         addMember();
@@ -105,14 +107,14 @@ const engineerInfo = () => {
         let newEngineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
         engineerHTML += `
         <div class="card col-6 col-md-4" style="width: 18rem;">
-        <div class="card-body">
+        <div class="card-body bg-primary text-light">
             <h5 class="card-title">${engineerName}</h5>
-            <p class="card-text">ICON ENGINEER</p>
+        
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID:${engineerId}</li>
             <li class="list-group-item">Email:<a href="mailto:${engineerEmail}">${engineerEmail}</a></li>
-            <li class="list-group-item">Github:<a href="https://github.com/${engineerGithub}">${engineerGithub}</a></li>
+            <li class="list-group-item">Github: <a href="https://github.com/${engineerGithub}">${engineerGithub}</a></li>
         </ul>
         </div>`
         addMember();
@@ -148,14 +150,14 @@ const internInfo = () => {
         let newIntern = new Intern(internName, internId, internEmail, internSchool);
         internHTML += `
         <div class="card col-6 col-md-4" style="width: 18rem;">
-            <div class="card-body">
+            <div class="card-body bg-primary text-light">
                 <h5 class="card-title">${internName}</h5>
-                <p class="card-text">ICON INTERN</p>
+
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID:${internId}</li>
                 <li class="list-group-item">Email:<a href="mailto:${internEmail}">${internEmail}</a></li>
-                <li class="list-group-item">School:${internSchool}</li>
+                <li class="list-group-item">School: ${internSchool}</li>
             </ul>
         </div>`
         addMember();
@@ -163,36 +165,6 @@ const internInfo = () => {
     })
 };
 
-// managerInfo()
-//     .then(addMember)
-
-//     .then(managerData => {
-//         generateManager(managerData);
-//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-//             if (err) throw err;
-
-//             console.log('Manager is added')
-//         })
-
-//     })
-//     .then(engineerData => {
-//         generateEngineer(engineerData);
-//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-//             if (err) throw err;
-
-//             console.log('Engineer is added')
-//         })
-
-//     })
-//     .then(internData => {
-//         generateIntern(internData);
-//         fs.writeFile('../dist/Output_index.html', htmlFilt, err => {
-//             if (err) throw err;
-
-//             console.log('Intern is added')
-//         })
-
-//     })
 
 
 function createHTML() {
@@ -207,13 +179,12 @@ function createHTML() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/assets/style.css"/>
     <title>My Team</title>
 </head>
 
 <body>
-    <header>My Team</header>
-    <section class="row">
+    <header class="text-light text-center bg-danger mx-2 my-3 py-4 rounded">My Team</header>
+    <section class="row px-4">
     `
     var closing = `
 
